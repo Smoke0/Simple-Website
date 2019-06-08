@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1= title
+    if exp
+        form(action='/verify/'+user.id, method="POST")
+            .form-group
+                label(for="Code") Enter Verification Code:
+                input#Code.form-control(name="Code" ,type="text")
+            button.btn.btn-outline-dark(type="submit") Submit
+    else
+        p Click on Button below to resend code.
+        form(action='/verify/resend/'+user.id, method="POST")
+            button.btn.btn-outline-dark(type="submit") Resend Code.

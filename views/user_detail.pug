@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    h1= title
+    p #{user.name}---#{user.email}
+    |
+    if myself
+        a(href=user.url+'/edit') Edit
+        form(action='/users/user/' + user.id + '/delete',method="POST")
+            button.btn.btn-outline-dark(type="submit") Remove Account
+    if follows
+        .container
+            a#BlackLinks(href='/articles/article/'+user.id) User's Article
+        if !myself
+            form(action='/notification/users/user/' + user.id + '/unfollow',method="POST")
+                .container
+                    button.btn.btn-outline-dark(type="submit") Unfollow
+    else
+        if reqsend
+            form(action='/notification/users/user/' + user.id + '/follow',method="POST")
+                button.btn.btn-outline-dark(disabled = 'disabled' title="Request already send") Follow
+        else
+            form(action='/notification/users/user/' + user.id + '/follow',method="POST")
+                button.btn.btn-outline-dark(type="submit") Follow
+

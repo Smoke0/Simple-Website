@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    h1=title
+    form(action='/contact', method="POST")
+        .form-group
+            label(for="Name") Name:
+            input#Name.form-control(name="Name" ,type="name", placeholder="enter name")
+        .form-group
+            label(for="E_mail") Email:
+            input#E_mail.form-control(name="E_mail" ,type="email", placeholder="enter email")
+        .form-group
+            label(for="textarea")
+            textarea#textarea.form-control(rows=5 placeholder="enter Text" required="true")
+        button.btn.btn-outline-dark(type="submit") Submit

@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h2= title
+  if Login
+    p Hello &nbsp
+      a(href='/users/user/'+user.id) !{user.name}
+    a#BlackLinks(href='/createarticle' style='') Create an article &nbsp
+    a#BlackLinks(href="/articles/article" style='') Articles &nbsp
+    a#BlackLinks(href="/users" style='') Users &nbsp
+    a#BlackLinks(href='/contact' style='') Contact Us &nbsp
+    a#BlackLinks(href='/notification' style='') Notifications &nbsp
+    a#BlackLinks(href="/users/logout" style='') Logout &nbsp
+  else
+    p Register here or &nbsp
+      a#BlackLinks(href='/login' style='') Login
+    form(action='/', method="POST" )
+      #RegisterFormDiv.container
+        .col-12
+          label(for="Name") Name:
+          input#Name.form-control(name="Name" ,type="name", placeholder="enter name",required="true")
+        .col-12
+          label(for="E_mail") Email:
+          input#E_mail.form-control(name="E_mail" ,type="email", placeholder="enter email",required="true")
+        .col-12
+          label(for="Password") Password:
+          input#Password.form-control(name="password" ,type="password", placeholder="enter password",required="true")
+        .col(style='')
+          button#Registerbtn.btn.btn-outline-dark(type="submit") Register

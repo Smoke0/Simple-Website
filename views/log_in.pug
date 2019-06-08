@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1=title
+    form(action='/login',method="POST")
+        #LogInFormDiv.container
+            .col-12
+                label(for="email") Email:
+                input#email.form-control(name="email" ,type="email", placeholder="enter email",required="true")
+            .col-12
+                label(for="password") Password:
+                input#password.form-control(name="password" ,type="password", placeholder="enter password",required="true")
+            button#LogInbtn.btn.btn-outline-dark(type="submit") LogIn

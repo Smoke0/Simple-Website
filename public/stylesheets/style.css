@@ -1,0 +1,29 @@
+body {
+  background: url("https://i0.wp.com/lilar.com/wp-content/uploads/2016/10/Savin-NY-Website-Background-Web.jpg?ssl=1") fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
+  width: 100%;
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#Registerbtn,#LogInbtn,#CreateArticleBtn{
+  width:100%;text-align:centre;margin-top:10px
+}
+#RegisterFormDiv,#LogInFormDiv{
+  background-color:#C2D5D8;width:400px;padding:20px
+}
+#BlackLinks{
+  font-weight:500;
+  font-size:18px;
+  color:white;
+  background-color:black;
+  border-style:solid;
+  border-width:4px;
+  border-color:black;
+}
+#userlinks{
+	font-weight:500;
+}

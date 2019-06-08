@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+    h2= title
+    ul
+        each notification in notifications
+            li
+                p !{notification.Text}
+                each Link in notification.Links
+                    form(action=Link, method="POST")
+                        .form-group
+                            button.btn.btn-outline-dark(type="submit") Accept Request

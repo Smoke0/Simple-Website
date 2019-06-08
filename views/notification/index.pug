@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+    h1=title
+    form(action='/notification', method="POST")
+        .form-group
+            label(for="text") Text:
+            input#text.form-control(name="text" ,type="text", placeholder="enter notification",required="true")
+        .form-group
+            label(for="to") To:
+            input#to.form-control(name="to" ,type="text", placeholder="",required="true")
+            button(type="submit") Submit

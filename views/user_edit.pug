@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    h2=title
+    form(action='/users/user/'+user.id+'/edit', method="POST")
+        .form-group
+            input(name="Name" ,type="name", placeholder="enter name",required="true")
+        .form-group
+            input(name="E_mail" ,type="email", placeholder="enter email",required="true")
+        button.btn.btn-outline-dark(type="submit") Submit

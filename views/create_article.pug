@@ -1,0 +1,10 @@
+extends layout
+block content
+    form(action='/createarticle', method="POST")
+        .form-group
+            label(for="title") Title:
+            input#title.form-control(name="title" , type="name", placeholder="enter Title",required="true")
+        .form-group
+            label(for="textarea") Text
+            textarea#textarea.form-control(rows=5 placeholder="enter Text" required="true")
+        button#CreateArticleBtn.btn.btn-outline-dark(type="submit") Create Article
