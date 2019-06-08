@@ -7,13 +7,13 @@ module.exports = function (name,email,text) {
     //var new_text  = text+"From"+name;
 
     var oauthclient = new OAuth(
-        "799279190687-mofl0tjc3mi5g3uqn1e6n05e2h84kuqe.apps.googleusercontent.com",
-        "VPiB9lZL1CiFh4RafvHYrn8E",
-        "https://developers.google.com/oauthplayground"
+        "",
+        "",
+        ""
     );
 
     oauthclient.setCredentials({
-        refresh_token:'1/VYb-1zzc0VwQ_pGCPZEY5F94_sF2cQv-dlyGcra2TCc'
+        refresh_token:''
     });
 
     oauthclient.refreshAccessToken().then(function (tokens) {
@@ -23,10 +23,10 @@ module.exports = function (name,email,text) {
                 service:'gmail',
                 auth:{
                     type:"OAuth2",
-                    user:'kashishdhawan070250@gmail.com',
-                    clientId:"799279190687-mofl0tjc3mi5g3uqn1e6n05e2h84kuqe.apps.googleusercontent.com",
-                    clientSecret:"VPiB9lZL1CiFh4RafvHYrn8E",
-                    refreshToken:`1/DXLcwXXqMjC1is2wAv5NlE9BD1l29l_efpcJKIwrC04`,
+                    user:'',
+                    clientId:"",
+                    clientSecret:"",
+                    refreshToken:``,
                     accessToken: accesstoken
                 },
                 tls:{rejectUnauthorized :false}
@@ -35,7 +35,7 @@ module.exports = function (name,email,text) {
         );
 
         var mailOptions = {
-            from:'kashishdhawan070250@gmail.com',
+            from:'',
             to:email,
             subject:'Verification code',
             text:text
