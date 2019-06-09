@@ -7,9 +7,11 @@ var mongoose  = require('mongoose');
 var session = require('express-session');
 var uuid = require('uuid');
 var filestore =  require('session-file-store')(session);
+var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
+var favicon = require('serve-favicon');
 var User = require('./models/User');
 
 // importing routes
@@ -27,15 +29,16 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // session setup
 app.use(session({
     genid:(req)=>{return uuid()},
-    store: new filestore(),
+    store: new MongoStore({url:'mongodb://localhost:27017/fcc'}),
     secret:'our secret',
     resave:false,
-    saveUninitialized: true
+    saveUninitialized: false
 }));
 
 // passport set up
@@ -54,6 +57,8 @@ passport.use(new LocalStrategy(
                     else{
                         return done(null,user);
                     }
+            }).catch(function(err){
+              done(err,false);
             });
         });
 }
