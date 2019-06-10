@@ -9,17 +9,33 @@ var Notification = require('../models/notifications');
 var Article = new require('../models/article');
 
 var emailer = require('../email');
+const { body,validationResult } = require('express-validator/check');
 
 
 /* GET home page. */
 router.get('/', function(req, res) {
     // renders page based on whether user is logged in or not.
-  res.render('index', { title: 'Legendary',Login:req.isAuthenticated(),user:req.user});
+  res.render('index', { title: 'Legendary',formdata:{},Login:req.isAuthenticated(),user:req.user,err:[]});
 });
 
 //POST handler for home page
-router.post('/', function (req,res) {
-    // creates a new user doc.
+router.post('/',[
+    body('E_mail','Invalid Email format.').exists().isEmail().normalizeEmail().custom(function(E_mail){
+      return User.findOne({email:E_mail}).then(function(user){
+        if (user){
+          return Promise.reject('Email already in use');
+        }
+      })
+    }),
+    body('password','Password should have atleast one upper one lower one numeric and one special charater.').exists().matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"),
+
+  function (req,res,next) {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      res.render('index',{title:'Legendary',formdata:req.body,Login:req.isAuthenticated(),user:req.user,err:errors.array()});
+    }
+    else{
+      // creates a new user doc.
     var user = new User({
         name: req.body.Name,
         email:req.body.E_mail,
@@ -32,7 +48,6 @@ router.post('/', function (req,res) {
             next(err);
         }
     });
-
     // creates a user verify code
     var token = uuid();
     var verify = new userVerify({
@@ -48,7 +63,9 @@ router.post('/', function (req,res) {
     var string = 'Hi! Your verification code is ' + token;
     //emailer(user.name,user.email,string);
     res.redirect("/");
-});
+    }
+    
+}]);
 
 // Creates an user article
 router.get('/createarticle',function (req,res) {

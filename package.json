@@ -13,6 +13,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
     "googleapis": "^39.2.0",
     "http-errors": "~1.6.2",
     "migrate": "^1.6.2",
@@ -27,6 +28,7 @@
     "pug": "2.0.0-beta11",
     "serve-favicon": "^2.5.0",
     "session-file-store": "^1.2.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "validator": "^11.0.0"
   }
 }

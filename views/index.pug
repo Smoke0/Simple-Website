@@ -18,12 +18,18 @@ block content
       #RegisterFormDiv.container
         .col-12
           label(for="Name") Name:
-          input#Name.form-control(name="Name" ,type="name", placeholder="enter name",required="true")
+          input#Name.form-control(name="Name" ,type="name", placeholder="enter name",required="true",value=formdata.Name)
         .col-12
           label(for="E_mail") Email:
-          input#E_mail.form-control(name="E_mail" ,type="email", placeholder="enter email",required="true")
+          input#E_mail.form-control(name="E_mail" ,type="email", placeholder="enter email",value=formdata.E_mail)
+          for e in err
+            if (e.param=='E_mail')
+              p.small.text-danger #{e.msg}
         .col-12
-          label(for="Password") Password:
-          input#Password.form-control(name="password" ,type="password", placeholder="enter password",required="true")
+          label(for="password") Password:
+          input#Password.form-control(name="password" ,type="password", placeholder="enter password")
+          for e in err
+            if (e.param=='password')
+              p.small.text-danger #{e.msg}
         .col(style='')
           button#Registerbtn.btn.btn-outline-dark(type="submit") Register
