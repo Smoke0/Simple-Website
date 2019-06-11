@@ -1,5 +1,3 @@
 // just for writing temporary stuff
 // things I am gonna add
-
-// addition of flash messages
-// In nodejs video at -26:54
+// Some problem with session files not getting deleted.

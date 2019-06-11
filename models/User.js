@@ -33,7 +33,7 @@ UserSchema.pre('save',function (next) {
     });
 
 });
-// This remove middleware is a bitch beware of bitches
+// This remove middleware is wierd one.
 // Here if you use pre hook on remove it won't work.
 // If you directly remove User like User.remove it wont work
 // You first have to find it like User.findOne and then remove it using User.remove

@@ -90,6 +90,7 @@ router.post('/user/:id/edit',function (req, res, next) {
         if(err){
             next(err);
         }
+        req.flash('success','User successfully updated');
         res.redirect('/users');
     });
 });
@@ -101,8 +102,12 @@ router.post('/user/:id/delete',function (req, res) {
         if(err){
             next(err);
         }
+        req.flash('success','Account Deleted');
+        req.logout();
+        req.session.destroy();
         result.remove();
-        res.redirect('/users');
+        res.redirect('/');
+
     });
 });
 
@@ -139,6 +144,7 @@ router.post('/accept/:id',function (req,res) {
          });
       });
    });
+   req.flash('success','Follows request accepted');
    res.redirect('/');
 });
 module.exports = router;

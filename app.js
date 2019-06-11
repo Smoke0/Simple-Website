@@ -13,6 +13,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
 var favicon = require('serve-favicon');
 var User = require('./models/User');
+var flash = require('connect-flash');
 
 // importing routes
 var indexRouter = require('./routes/index');
@@ -80,6 +81,15 @@ passport.deserializeUser(function (id,done) {
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+
+// middleware function storing flash messages into res.locals
+// because res.locals are available to pug or whatever template engine rendered during a particular req/res cycle.
+app.use(function(req, res, next){
+    res.locals.successmsg = req.flash('success');
+    res.locals.failmsg  = req.flash('fail');
+    next();
+});
 
 //db setput
 var mongoDB = 'mongodb://localhost:27017/fcc'; // mongodb for website to use

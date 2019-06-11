@@ -40,6 +40,7 @@ router.post('/users/user/:id/follow',function (req,res) {
             );
             notfic.save();
         }
+        req.flash('success','Follow request send.');
         res.redirect('/users');
     });
 });
@@ -58,6 +59,7 @@ router.post('/users/user/:id/unfollow',function (req,res) {
             next(err);
         }
     });
+    req.flash('success','Unfollowed the User');
     res.redirect('/users');
 
 });

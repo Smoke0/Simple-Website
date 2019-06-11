@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var uuid = require('uuid');
 var passport = require('passport');
+const { body,validationResult } = require('express-validator/check');
 
 var User = require('../models/User');
 var userVerify  = require('../models/userVerification');
@@ -9,7 +10,7 @@ var Notification = require('../models/notifications');
 var Article = new require('../models/article');
 
 var emailer = require('../email');
-const { body,validationResult } = require('express-validator/check');
+
 
 
 /* GET home page. */
@@ -20,6 +21,8 @@ router.get('/', function(req, res) {
 
 //POST handler for home page
 router.post('/',[
+  // checks whether the email is in valid format or not.
+  // also checks whether it's already exists or not.
     body('E_mail','Invalid Email format.').exists().isEmail().normalizeEmail().custom(function(E_mail){
       return User.findOne({email:E_mail}).then(function(user){
         if (user){
@@ -27,13 +30,17 @@ router.post('/',[
         }
       })
     }),
+    // checks password in valid format or not
+    // uses regex for checking whether password mathes criteria or not.
     body('password','Password should have atleast one upper one lower one numeric and one special charater.').exists().matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"),
 
   function (req,res,next) {
     const errors = validationResult(req);
+    // if there are errors in validation then render pages with those errors.
     if(!errors.isEmpty()){
       res.render('index',{title:'Legendary',formdata:req.body,Login:req.isAuthenticated(),user:req.user,err:errors.array()});
     }
+    // if no errors simply saves the user.
     else{
       // creates a new user doc.
     var user = new User({
@@ -62,6 +69,7 @@ router.post('/',[
     // sends a mail to user having verify code.
     var string = 'Hi! Your verification code is ' + token;
     //emailer(user.name,user.email,string);
+    req.flash('success','You have successfully Registered');
     res.redirect("/");
     }
     
@@ -87,6 +95,7 @@ router.post('/createarticle',function (req,res) {
         if(err){
             next(err);
         }
+        req.flash('success','Article successfully saved');
         res.redirect('/');
     })
 });
@@ -173,6 +182,7 @@ router.post('/verify/:id',function (req,res) {
                if(err){
                    next(err);
                }
+               req.flash('success','Account Verified.Now LogIn');
                res.redirect('/login');
                userVerify.findOneAndRemove({code:req.body.Code}).exec(function (err) {
                    if(err){
@@ -202,6 +212,7 @@ router.post('/verify/resend/:id',function (req,res) {
            //emailer(user.name,user.email,string);
 
        }
+       req.flash('success','Verification code has been send');
        res.redirect("/login");
    });
 });
@@ -223,13 +234,15 @@ router.post('/login',function (req,res,next) {
         }
         else {
             if(!user.active){
-                return res.redirect('/verify/'+user._id)
+
+                return [req.flash('success','Activate Your Account'),res.redirect('/verify/'+user._id)];
                 }
             else {
                 req.login(user,function(err){
                     if(err){next(err)}
-                    return res.redirect('/');
-                })
+              
+                    return [req.flash('success','successfully logged in'),res.redirect('/')];
+                });
             }
         }
     })(req,res);

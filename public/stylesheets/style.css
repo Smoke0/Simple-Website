@@ -27,3 +27,11 @@ body {
 #userlinks{
 	font-weight:500;
 }
+#FlashSuccess{
+  text-align: center;
+  background-color: #B8EDC4;
+  
+#FlashFail{
+  text-align: center;
+  background-color: #F0C1CC;
+}
